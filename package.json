@@ -3,10 +3,11 @@
   "private": true,
   "version": "0.0.1",
   "description": "",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "DEBUG=slash-command-template node src/index.js",
-    "dev": "nodemon src/index.js"
+    "start": "DEBUG=slash-command-template node --experimental-modules --es-module-specifier-resolution=node src/index",
+    "dev": "nodemon --experimental-modules --es-module-specifier-resolution=node src/index.js"
   },
   "authors": [
     "vitor alencar <vitomalencar>"
