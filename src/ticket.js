@@ -1,38 +1,33 @@
-const debug = require("debug")("slash-command-template:ticket");
-const api = require("./api");
-const payloads = require("./payloads");
+import api from './api'
+import payloads from './payloads'
 
 /*
  *  Send ticket creation confirmation via
  *  chat.postMessage to the user who created it
  */
-const sendConfirmation = async (ticket) => {
+export const sendConfirmation = async (ticket) => {
   // open a DM channel for that user
-  let channel = await api.callAPIMethod("im.open", {
+  const channel = await api.callAPIMethod('im.open', {
     user: ticket.userId,
-  });
+  })
 
-  console.log(ticket, "WOOW");
-
-  let message = payloads.confirmation({
+  const message = payloads.confirmation({
     channel_id: channel.channel.id,
     title: ticket.title,
     location: ticket.location,
     date: ticket.date,
-  });
+  })
 
-  let result = await api.callAPIMethod("chat.postMessage", message);
-  debug("sendConfirmation: %o", result);
-};
+  const result = await api.callAPIMethod('chat.postMessage', message)
+  debug('sendConfirmation: %o', result)
+}
 
-// Create helpdesk ticket. Call users.find to get the user's email address
-// from their user ID
-const create = async (userId, view) => {
-  let values = view.state.values;
+export const create = async (userId, view) => {
+  let values = view.state.values
 
-  let result = await api.callAPIMethod("users.info", {
+  let result = await api.callAPIMethod('users.info', {
     user: userId,
-  });
+  })
 
   await sendConfirmation({
     userId,
@@ -40,7 +35,5 @@ const create = async (userId, view) => {
     title: values.title_block.title.value,
     location: values.location_block.location.value,
     date: values.date_block.date.selected_date,
-  });
-};
-
-module.exports = { create, sendConfirmation };
+  })
+}
