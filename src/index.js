@@ -1,5 +1,4 @@
 import express from 'express'
-import asyncHandler from 'express-async-handler'
 import bodyParser from 'body-parser'
 import { create } from './ticket'
 import { isVerified } from './verifySignature'
